@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>İyi Ki Doğdun Sevgilim! ❤️</title>
+  
+  <!-- Google Yazı Tipleri (Romantik & Zarif) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nunito:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Konfeti Efekti Kütüphanesi -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --primary: #ff6b8b;
+      --primary-light: #ffd1dc;
+      --secondary: #ff8e72;
+      --accent: #ff477e;
+      --bg: #fffbf9;
+      --card-bg: rgba(255, 255, 255, 0.92);
+      --text: #4a403a;
+      --text-muted: #7d726d;
+      --shadow: 0 15px 35px rgba(255, 107, 139, 0.15);
+      --font-heading: 'Dancing Script', cursive;
+      --font-body: 'Nunito', sans-serif;
+      --font-serif: 'Playfair Display', serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(255, 209, 220, 0.35) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(255, 182, 193, 0.3) 0%, transparent 40%);
+    }
+
+    /* Arka planda uçuşan tatlı kalpler */
+    .floating-hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .heart-bubble {
+      position: absolute;
+      bottom: -20px;
+      color: rgba(255, 107, 139, 0.4);
+      animation: floatUp 8s infinite linear;
+      font-size: 20px;
+      user-select: none;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0; }
+      15% { opacity: 0.8; }
+      85% { opacity: 0.8; }
+      100% { transform: translateY(-110vh) scale(1.2) rotate(360deg); opacity: 0; }
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 1. GİRİŞ (HERO) */
+    .hero {
+      min-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .hero-badge {
+      background: var(--primary-light);
+      color: var(--accent);
+      padding: 6px 18px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      color: var(--accent);
+      margin-bottom: 15px;
+      text-shadow: 2px 2px 4px rgba(255, 107, 139, 0.2);
+    }
+
+    .hero p {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      color: var(--text-muted);
+      max-width: 650px;
+      margin-bottom: 30px;
+      font-family: var(--font-serif);
+      font-style: italic;
+    }
+
+    .scroll-down-btn {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(255, 107, 139, 0.4);
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .scroll-down-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(255, 107, 139, 0.5);
+    }
+
+    /* BÖLÜM BAŞLIKLARI */
+    .section-title {
+      text-align: center;
+      margin: 60px 0 35px 0;
+    }
+
+    .section-title h2 {
+      font-family: var(--font-heading);
+      font-size: 2.8rem;
+      color: var(--accent);
+    }
+
+    .section-title p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    /* 2. ZAMAN SAYACI (BİRLİKTE GEÇEN SÜRE) */
+    .counter-section {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 35px 25px;
+      margin: 30px 0;
+      box-shadow: var(--shadow);
+      text-align: center;
+      border: 1px solid rgba(255, 209, 220, 0.5);
+    }
+
+    .counter-grid {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 25px;
+      flex-wrap: wrap;
+    }
+
+    .counter-box {
+      background: white;
+      border-radius: 16px;
+      padding: 15px 20px;
+      min-width: 100px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      border: 1px solid #ffeef1;
+    }
+
+    .counter-number {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent);
+      display: block;
+    }
+
+    .counter-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* 3. FOTOĞRAF GALERİSİ / POLAROID KARTLAR */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+      padding: 10px;
+    }
+
+    .polaroid-card {
+      background: white;
+      padding: 15px 15px 25px 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      border-radius: 6px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+      position: relative;
+    }
+
+    /* Polaroidlerin doğal görünmesi için hafif açısal duruş */
+    .polaroid-card:nth-child(odd) {
+      transform: rotate(-2deg);
+    }
+    .polaroid-card:nth-child(even) {
+      transform: rotate(2deg);
+    }
+    .polaroid-card:nth-child(3n) {
+      transform: rotate(1deg);
+    }
+
+    .polaroid-card:hover {
+      transform: scale(1.05) rotate(0deg);
+      box-shadow: 0 20px 35px rgba(255, 107, 139, 0.25);
+      z-index: 10;
+    }
+
+    .polaroid-img-wrapper {
+      width: 100%;
+      height: 270px;
+      overflow: hidden;
+      border-radius: 4px;
+      background: #f7f7f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .polaroid-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s;
+    }
+
+    .polaroid-card:hover img {
+      transform: scale(1.06);
+    }
+
+    /* Fotoğraf altındaki yazı alanı (İsteğe bağlı olarak doldurulabilir) */
+    .polaroid-caption {
+      margin-top: 15px;
+      min-height: 25px; /* Boş olsa bile polaroid altı estetik boşluğunu korur */
+      text-align: center;
+      font-family: var(--font-heading);
+      font-size: 1.45rem;
+      color: #333;
+    }
+
+    .polaroid-date {
+      display: block;
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* 4. AŞK MEKTUBU BÖLÜMÜ */
+    .letter-section {
+      margin: 60px 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .letter-container {
+      background: white;
+      max-width: 750px;
+      width: 100%;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      border-left: 8px solid var(--primary);
+      position: relative;
+      background-image: repeating-linear-gradient(white, white 29px, #f7f2ef 30px);
+    }
+
+    .letter-header {
+      font-family: var(--font-heading);
+      font-size: 2.2rem;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .letter-body {
+      font-size: 1.15rem;
+      line-height: 1.9;
+      color: #3d3532;
+      white-space: pre-line;
+      font-family: var(--font-serif);
+    }
+
+    .letter-signature {
+      margin-top: 30px;
+      text-align: right;
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      color: var(--primary);
+    }
+
+    /* 5. İNTERAKTİF PASTA VE DİLEK ALANI */
+    .cake-section {
+      text-align: center;
+      background: linear-gradient(145deg, #fff0f3, #ffe6eb);
+      border-radius: 24px;
+      padding: 40px 20px;
+      margin: 60px 0;
+      box-shadow: var(--shadow);
+    }
+
+    .cake-icon {
+      font-size: 90px;
+      cursor: pointer;
+      display: inline-block;
+      transition: transform 0.3s;
+      user-select: none;
+      animation: pulse 2s infinite;
+    }
+
+    .cake-icon:hover {
+      transform: scale(1.15);
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    .blow-instruction {
+      font-size: 1.1rem;
+      color: var(--accent);
+      margin-top: 15px;
+      font-weight: 700;
+    }
+
+    /* 6. SENİ SEVME SEBEPLERİM */
+    .reasons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .reason-card {
+      background: white;
+      padding: 25px 20px;
+      border-radius: 18px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+      border: 1px solid #ffeef1;
+      transition: transform 0.3s;
+    }
+
+    .reason-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .reason-card .icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .reason-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+      color: var(--accent);
+    }
+
+    .reason-card p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Lightbox Modal (Büyütülmüş Fotoğraf) */
+    .lightbox-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .lightbox-modal.active {
+      display: flex;
+    }
+
+    .lightbox-modal img {
+      max-width: 90%;
+      max-height: 85vh;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      color: white;
+      font-size: 35px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      .letter-container {
+        padding: 25px 18px;
+      }
+      .counter-grid {
+        gap: 10px;
+      }
+      .counter-box {
+        min-width: 70px;
+        padding: 10px;
+      }
+      .counter-number {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Arka plandaki yüzen kalpler -->
+  <div class="floating-hearts" id="floatingHearts"></div>
+
+  <!-- ============================================================== -->
+  <!-- 🎵 OTOMATİK MÜZİK: YALIN - AKŞAMÜSTÜ                            -->
+  <!-- Klasörüne 'aksamustu.mp3' şarkısını koyduğunda site açıldığında -->
+  <!-- veya sayfaya ilk dokunulduğunda şarkı otomatik başlayacaktır!  -->
+  <!-- ============================================================== -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="aksamustu.mp3" type="audio/mpeg">
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="container">
+
+    <!-- ============================================================== -->
+    <!-- 1. GİRİŞ (HERO) BÖLÜMÜ                                         -->
+    <!-- ============================================================== -->
+    <section class="hero">
+      <span class="hero-badge">✨ Bugün Çok Özel Bir Gün ✨</span>
+
+      <!-- ✏️ BURAYA KIZ ARKADAŞININ İSMİNİ YA DA HİTABINI YAZABİLİRSİN: -->
+      <h1>İyi ki Doğmuşsunn hayatımın anlamı herşeyimmmm</h1>
+
+      <!-- ✏️ BURAYA GİRİŞ CÜMLENİ / GÜZEL SÖZÜNÜ YAZABİLİRSİN: -->
+      <p>
+        İyi ki varsın iyi ki doğmuşsun bitanem daha beraber kutlayacağımız nice mutlu yıllara.....
+
+      </p>
+
+      <a href="#anilar" class="scroll-down-btn">Birlikte Anılarımıza Bakalım 💖</a>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- 2. BİRLİKTE GEÇEN ZAMAN SAYACI                                  -->
+    <!-- Başlangıç Tarihi: 13 Eylül 23:45 olarak ayarlandı.            -->
+    <!-- ============================================================== -->
+    <div class="counter-section">
+      <h3 style="font-family: var(--font-heading); font-size: 2.2rem; color: var(--accent);">
+        Kalbim Seninle Atalı...
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">13 Eylül'den Bu Yana Birlikte Geçen Her Anımız</p>
+      
+      <div class="counter-grid">
+        <div class="counter-box">
+          <span class="counter-number" id="days">0</span>
+          <span class="counter-label">Gün</span>
+        </div>
+        <div class="counter-box">
+          <span class="counter-number" id="hours">0</span>
+          <span class="counter-label">Saat</span>
+        </div>
+        <div class="counter-box">
+          <span class="counter-number" id="minutes">0</span>
+          <span class="counter-label">Dakika</span>
+        </div>
+        <div class="counter-box">
+          <span class="counter-number" id="seconds">0</span>
+          <span class="counter-label">Saniye</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- 3. FOTOĞRAF GALERİSİ (POLAROID ANILAR)                         -->
+    <!-- Fotoğrafların altındaki yazılar kaldırıldı, boş bırakıldı.     -->
+    <!-- İleride istersen her fotoğrafın altındaki 'polaroid-caption'   -->
+    <!-- veya 'polaroid-date' alanlarına notunu yazabilirsin.           -->
+    <!-- ============================================================== -->
+    <div class="section-title" id="anilar">
+      <h2>En Özel Anlarımız 📸</h2>
+      <p>Seninle geçen her an, ömrümün en güzel karesi</p>
+    </div>
+
+    <div class="gallery-grid">
+
+      <!-- ================= 1. FOTOĞRAF KARTI ================= -->
+      <div class="polaroid-card" onclick="openLightbox(this)">
+        <div class="polaroid-img-wrapper">
+          <img src="foto1.jpg" alt="Fotoğraf 1">
+        </div>
+        <div class="polaroid-caption">Parfe bahane yanında olmak şahane..</div>
+        <span class="polaroid-date"></span>
+      </div>
+
+      <!-- ================= 2. FOTOĞRAF KARTI ================= -->
+      <div class="polaroid-card" onclick="openLightbox(this)">
+        <div class="polaroid-img-wrapper">
+          <img src="foto2.jpg" alt="Fotoğraf 2">
+        </div>
+        <div class="polaroid-caption">Her kötü hissettiğinde yanındayım sevgilimm</div>
+        <span class="polaroid-date"></span>
+      </div>
+
+      <!-- ================= 3. FOTOĞRAF KARTI ================= -->
+      <div class="polaroid-card" onclick="openLightbox(this)">
+        <div class="polaroid-img-wrapper">
+          <img src="foto3.jpg" alt="Fotoğraf 3">
+        </div>
+        <div class="polaroid-caption">Beraber yağmurdan sırılsıklam olduğumuz gün(Ben zaten aşkımdan sırılsıklam olmuştum)</div>
+        <span class="polaroid-date"></span>
+      </div>
+
+      <!-- ================= 4. FOTOĞRAF KARTI ================= -->
+      <div class="polaroid-card" onclick="openLightbox(this)">
+        <div class="polaroid-img-wrapper">
+          <img src="foto4.jpg" alt="Fotoğraf 4">
+        </div>
+        <div class="polaroid-caption">O kadar ışığın arasında parıldayan gözlerine aşığımm</div>
+        <span class="polaroid-date"></span>
+      </div>
+
+      <!-- ================= 5. FOTOĞRAF KARTI ================= -->
+      <div class="polaroid-card" onclick="openLightbox(this)">
+        <div class="polaroid-img-wrapper">
+          <img src="foto5.jpg" alt="Fotoğraf 5">
+        </div>
+        <div class="polaroid-caption">Bu ilk köfteci yusuf dateimiz hayatımda ilk defa bi tost bu kadar lezzetli geldi...</div>
+        <span class="polaroid-date"></span>
+      </div>
+
+      <!-- ================= 6. FOTOĞRAF KARTI ================= -->
+      <div class="polaroid-card" onclick="openLightbox(this)">
+        <div class="polaroid-img-wrapper">
+          <img src="foto6.jpg" alt="Fotoğraf 6">
+        </div>
+        <div class="polaroid-caption">Yine gözlerimi senden alamadığım bi an(başka bi anımı bulamazsın)</div>
+        <span class="polaroid-date"></span>
+      </div>
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- 4. SENİ SEVME SEBEPLERİM (KARTLAR)                             -->
+    <!-- ============================================================== -->
+    <div class="section-title">
+      <h2>SENİ ÇOOOOKKKKK SEVİYORUMMMM 💕</h2>
+    </div>
+
+    <div class="reasons-grid">
+      <div class="reason-card">
+        <div class="icon">✨</div>
+        <!-- ✏️ 1. SEBEP BAŞLIĞI VE AÇIKLAMASI -->
+        <h3>Gözlerinin Parıltısı</h3>
+        <p>Gözlerinin içi parlayarak baktığında,güldüğünde kendimi kaybediyorum(senin gözler biraz hareketli ama)</p>
+      </div>
+
+      <div class="reason-card">
+        <div class="icon">☕</div>
+        <!-- ✏️ 2. SEBEP BAŞLIĞI VE AÇIKLAMASI -->
+        <h3>Sıcak Sohbetlerimiz</h3>
+        <p>Saatlerce konuşup asla sıkılmadığımız o sohbetler ve birlikte geçirdiğimiz her an.</p>
+      </div>
+
+      <div class="reason-card">
+        <div class="icon">🧸</div>
+        <!-- ✏️ 3. SEBEP BAŞLIĞI VE AÇIKLAMASI -->
+        <h3>Huzur Veren Varlığın</h3>
+        <p>Yanında olduğumda kendimi evimde, en güvende ve en huzurlu hissettiğim yerdesin.</p>
+      </div>
+
+      <div class="reason-card">
+        <div class="icon">🌟</div>
+        <!-- ✏️ 4. SEBEP BAŞLIĞI VE AÇIKLAMASI -->
+        <h3>Kocaman Kalbin</h3>
+        <p>İçindeki o bana karşı sevgiyi, merhameti her şeyini çok seviyorummm seni gerçekten sen olduğun için seviyorum</p>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- 5. ÖZEL DOĞUM GÜNÜ MEKTUBU                                     -->
+    <!-- ============================================================== -->
+    <div class="section-title">
+      <h2>Sana Özel Bir Mektup 💌</h2>
+    </div>
+
+    <div class="letter-section">
+      <div class="letter-container">
+        <!-- ✏️ MEKTUP BAŞLIĞI -->
+        <div class="letter-header">Canım Sevgilim Herşeyimm,</div>
+        
+        <!-- ✏️ BURAYA GÜZEL SÖZLERİNİ VE DOĞUM GÜNÜ MEKTUBUNU YAZABİLİRSİN: -->
+        <div class="letter-body">
+Aşkım benim iyi ki doğmuşsunn iyi ki tanımışım seni iyi ki gelmişim yanına gerçekten Allaha binlerce kez şükür olsun her şey çok güzeldi geçirdiğimiz süre boyunca hep çok mutluyum hep çok huzurluydum hala da öyleyim her geçen gün seni daha da çok seviyorum.Her şey daha da güzel olucak aşkım her zaman dediğin gibi bizim çektiğimiz cefa da güzel sefamız daha da güzel olucak söz veriyorumm.
+Aşkım bu hediyeyi aslında daha önce vericektim sende biliyosun ama o gün gördüğünde patlamış gibi hissettim kendimi sürprizi olmıcaktı ufak bi yalan söylemek zorunda kaldım seni de sinirlendirmişim istemeden çok özür dilerim aşkımm
+İyi ki varsın iyi ki hayatımsın güzelim beraber daha nice doğum günleri kutlıcazz senii çooooookk seviyorummm koccamaannn öpüyorummm bitanemmm 
+        </div>
+
+        <!-- ✏️ İMZA KISMI: -->
+        <div class="letter-signature">
+          
+          ❤️ Seni Çok Seven Sevgilin
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- 6. İNTERAKTİF PASTA VE DİLEK ALANI                             -->
+    <!-- ============================================================== -->
+    <div class="cake-section">
+      <h3 style="font-family: var(--font-heading); font-size: 2.4rem; color: var(--accent);">
+        Hadi Bir Dilek Tut! 🎂
+      </h3>
+      <div class="cake-icon" id="birthdayCake" onclick="makeWish()">
+        🎂
+      </div>
+      <p class="blow-instruction" id="wishText">Pastaya dokunarak mumları üfle ve dileğini tut! 🕯️</p>
+    </div>
+
+    <!-- FOOTER (İstediğin gibi sadece sade ve sevgi dolu bırakıldı) -->
+    <footer>
+    </footer>
+
+  </div>
+
+  <!-- Fotoğraf Büyütme Modalı (Lightbox) -->
+  <div class="lightbox-modal" id="lightboxModal" onclick="closeLightbox()">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightboxImg" src="" alt="Büyütülmüş Fotoğraf">
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- JAVASCRIPT KODLARI                                             -->
+  <!-- ============================================================== -->
+  <script>
+    /* ==============================================================
+       1. TARIH AYARI (13 EYLÜL 23:45)
+       JavaScript'te aylar 0'dan başlar (0=Ocak, ..., 8=Eylül).
+       ============================================================== */
+    const ILISKI_BASLANGIC_TARIHI = new Date(2026, 8, 13, 23, 45, 0);
+
+    function updateCounter() {
+      const now = new Date();
+      const difference = now - ILISKI_BASLANGIC_TARIHI;
+
+      if (difference < 0) {
+        document.getElementById('days').innerText = "0";
+        document.getElementById('hours').innerText = "0";
+        document.getElementById('minutes').innerText = "0";
+        document.getElementById('seconds').innerText = "0";
+        return;
+      }
+
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((difference / 1000 / 60) % 60);
+      const seconds = Math.floor((difference / 1000) % 60);
+
+      document.getElementById('days').innerText = days;
+      document.getElementById('hours').innerText = hours;
+      document.getElementById('minutes').innerText = minutes;
+      document.getElementById('seconds').innerText = seconds;
+    }
+    setInterval(updateCounter, 1000);
+    updateCounter();
+
+    /* ==============================================================
+       2. MÜZİK OTOMATİK ÇALMA (YALIN - AKŞAMÜSTÜ)
+       Tarayıcı politikaları gereği sayfa açıldığında otomatik başlar;
+       tarayıcı engellerse kullanıcının ekrana ilk dokunuşunda çalar!
+       ============================================================== */
+    const bgMusic = document.getElementById('bgMusic');
+    function tryPlayMusic() {
+      if (bgMusic) {
+        bgMusic.play().then(() => {
+          // Başarıyla çalmaya başladı, tıklama dinleyicilerini kaldır
+          document.removeEventListener('click', tryPlayMusic);
+          document.removeEventListener('touchstart', tryPlayMusic);
+          document.removeEventListener('scroll', tryPlayMusic);
+        }).catch(e => {
+          // İlk kullanıcı etkileşimini bekliyor
+        });
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', tryPlayMusic);
+    document.addEventListener('click', tryPlayMusic);
+    document.addEventListener('touchstart', tryPlayMusic);
+    document.addEventListener('scroll', tryPlayMusic);
+
+    /* ==============================================================
+       3. ARKA PLAN YÜZEN KALP BALONCUKLARI
+       ============================================================== */
+    function createFloatingHearts() {
+      const container = document.getElementById('floatingHearts');
+      const heartSymbols = ['💖', '💕', '💗', '🌸', '✨', '❤️'];
+
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart-bubble';
+        heart.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (Math.random() * 5 + 6) + 's';
+        heart.style.animationDelay = (Math.random() * 5) + 's';
+        heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+        container.appendChild(heart);
+      }
+    }
+    createFloatingHearts();
+
+    /* ==============================================================
+       4. DİLEK TUTMA & KONFETİ PATLATMA EFEKTİ
+       ============================================================== */
+    let wishMade = false;
+    function makeWish() {
+      const cake = document.getElementById('birthdayCake');
+      const wishText = document.getElementById('wishText');
+
+      confetti({
+        particleCount: 120,
+        spread: 80,
+        origin: { y: 0.6 }
+      });
+
+      setTimeout(() => {
+        confetti({
+          particleCount: 70,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 }
+        });
+        confetti({
+          particleCount: 70,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 }
+        });
+      }, 300);
+
+      if (!wishMade) {
+        cake.innerText = '✨🎉🥰';
+        wishText.innerHTML = ' İyi ki doğdun, iyi ki varsın! ❤️';
+        wishText.style.color = '#ff477e';
+        wishMade = true;
+      }
+    }
+
+    /* ==============================================================
+       5. FOTOĞRAFLARA TIKLAYINCA BÜYÜTME (LIGHTBOX)
+       ============================================================== */
+    function openLightbox(card) {
+      const img = card.querySelector('img');
+      const modal = document.getElementById('lightboxModal');
+      const lightboxImg = document.getElementById('lightboxImg');
+      lightboxImg.src = img.src;
+      modal.classList.add('active');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightboxModal').classList.remove('active');
+    }
+  </script>
+</body>
+</html>
